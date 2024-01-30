@@ -3,7 +3,7 @@
 Team:
 
 * Brittany Robarge - Shoes
-* Person 2 - Which microservice?
+* Gary Burns - Hats
 
 ## Design
 
