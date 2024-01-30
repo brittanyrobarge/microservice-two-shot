@@ -1,7 +1,7 @@
 # Wardrobify
 
 Team:
-
+These are the people working on the project:
 * Brittany Robarge - Shoes
 * Gary Burns - Hats
 
