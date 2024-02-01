@@ -19,6 +19,9 @@
 
 ## Design
 
+    Diagram:
+    ![Img](https://i.imgur.com/vnC1q1l.png)
+
 ## Shoes microservice
 
     Explain your models and integration with the wardrobe
