@@ -32,3 +32,37 @@
     microservice, here.
 
     The Hats microservice utilizes the Location model from the Wardrobe project folder, in the wardrobe_api app. It uses the poller.py in the hats app, in hats/poll, which fetches all instances of Location from the wardrobe project, and creates LocationVOs based on those locations. Then, we use those LocationVOs to attach to our new hats upon creation to assign them to a location.
+
+
+## Requests Chart
+
+    +-------------+------------------------+-----------------------------------+
+    | HTTP Method | URL                    | Description                       |
+    +-------------+------------------------+-----------------------------------+
+    | GET         | /shoes/                | Retrieves all shoes               |
+    | POST        | /shoes/                | Creates a new shoe                |
+    | DELETE      | /shoes/<int:shoe_id>/  | Deletes shoe with specified id    |
+    | GET         | /hats/                 | Retrieves all hats                |
+    | POST        | /hats/                 | Creates a new hat                 |
+    | DELETE      | /hats/<int:hat_id>/    | Deletes hat with specified id     |
+    +-------------+------------------------+-----------------------------------+
+
+## How to make JSON requests
+
+  To create a shoe:
+        <!-- {
+        "manufacturer": "Nike",
+        "model_name": "Air Max",
+        "color": "Red",
+        "photo_url": "http://example.com/shoe.jpg",
+        "bin": "/api/bins/1"
+        } -->
+
+  To create a hat:
+        <!-- {
+        "manufacturer": "New Era",
+        "model_name": "59Fifty",
+        "color": "Blue",
+        "photo_url": "http://example.com/hat.jpg",
+        "location": "/api/locations/1"
+        } -->
