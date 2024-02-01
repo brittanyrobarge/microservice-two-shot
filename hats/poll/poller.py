@@ -16,12 +16,13 @@ def get_locations():
     response = requests.get("http://wardrobe-api:8000/api/locations/")
     content = json.loads(response.content)
     for location in content["locations"]:
-        LocationVO.objects.update_or_create(
-            defaults={"reference_href": location["href"],
-                      "closet_name": location["closet_name"],
+        current_location = LocationVO.objects.update_or_create(
+            reference_href = location["href"],
+            defaults={"closet_name": location["closet_name"],
                       "shelf_number": location["shelf_number"],
                       "section_number": location["section_number"]},
         )
+        print(current_location)
 
 def poll():
     while True:

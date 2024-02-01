@@ -125,7 +125,7 @@ function CreateHatForm() {
                     <select name="location" onChange={handleChangeLocation} className="form-control select-arrow">
                         <option value={location}>Select a location</option>
                         {locations.map(location => (
-                            <option key={location.id} value={location.href}>
+                            <option value={location.href}>
                                 {`${location.closet_name} - Section ${location.section_number} - Shelf ${location.shelf_number}`}
                             </option>
                         ))}

@@ -43,7 +43,7 @@ const HatList = () => {
                     </thead>
                     <tbody>
                         {hatList.map((hat) => (
-                            <tr key={hat.fabric}>
+                            <tr key={hat.id}>
                                 <td>
                                     <img src={hat.picture} width={50} alt="Hat" />
                                 </td>
