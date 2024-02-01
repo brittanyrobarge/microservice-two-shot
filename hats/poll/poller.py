@@ -13,13 +13,16 @@ from hats_rest.models import LocationVO
 # from hats_rest.models import Something
 
 def get_locations():
-    response = requests.get("http://localhost:8100/api/locations/")
+    response = requests.get("http://wardrobe-api:8000/api/locations/")
+    print(response)
     content = json.loads(response.content)
+    print(content)
     for location in content["locations"]:
         LocationVO.objects.update_or_create(
-            closet_name=location["closet_name"],
-            section_number=location["section_number"],
-            shelf_number=location["shelf_number"],
+            defaults={"reference_href": location["href"],
+                      "closet_name": location["closet_name"],
+                      "shelf_number": location["shelf_number"],
+                      "section_number": location["section_number"]},
         )
 
 def poll():
@@ -28,6 +31,7 @@ def poll():
         try:
             get_locations()
         except Exception as e:
+            print("exception")
             print(e)
         time.sleep(60)
 

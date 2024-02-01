@@ -31,7 +31,7 @@ const HatList = () => {
             <h1>Hat List</h1>
             {hatList.length > 0 ? (
                 <table className="table table-dark table-striped table-hover table-bordered">
-                    <thead class="table-light">
+                    <thead className="table-light">
                         <tr>
                             <th>Image</th>
                             <th>Color</th>
@@ -50,7 +50,7 @@ const HatList = () => {
                                 <td>{hat.fabric}</td>
                                 <td>{hat.style_name}</td>
                                 <td>
-                                    <button className="btn btn-danger" onClick={() => this.deleteHat(hat.id)}>
+                                    <button className="btn btn-danger" onClick={() => deleteHat(hat.id)}>
                                         Delete
                                     </button>
                                 </td>
