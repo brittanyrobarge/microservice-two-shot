@@ -24,6 +24,7 @@ function ShoeForm(props) {
     }, []);
 
     const handleSubmit = async (event) => {
+        console.log(formData)
         event.preventDefault();
         const shoeUrl = 'http://localhost:8080/api/shoes/';
 
@@ -49,7 +50,7 @@ function ShoeForm(props) {
     }
     const handleFormChange = (event) => {
         const value = event.target.value;
-        const inputName = event.target.value;
+        const inputName = event.target.name;
 
         setFormData({
             ...formData,
@@ -76,14 +77,14 @@ function ShoeForm(props) {
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={handleFormChange} value= {formData.picture_url} placeholder="Photo Url" required type="url" name="picture_url" id="photo_url" className="form-control" />
-                            <label htmlFor="max_presentations">Photo Url</label>
+                            <label htmlFor="photo_url">Photo Url</label>
                         </div>
                         <div className="mb-3">
                             <select onChange={handleFormChange} value={formData.bin} required name ="bin" id="bin" className="form-select">
                                 <option value="">Choose a bin </option>
                                 {bins.map(bin => {
                                     return (
-                                        <option key={bin.id} value={bin.id}>{bin.closet_name}</option>
+                                        <option key={bin.id} value={bin.href}>{bin.closet_name}</option>
                                     )
                                 })}
                             </select>

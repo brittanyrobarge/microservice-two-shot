@@ -54,7 +54,6 @@ def api_shoes(request, shoe_id=None):
             if shoe_id is not None:
                 shoe = Shoe.objects.get(id=shoe_id)
                 shoe.delete()
-                
         except Shoe.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
             response.status_code = 404

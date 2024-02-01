@@ -18,18 +18,24 @@
     `http://localhost:3000/`
 
 ## Design
+    Wardrobify is made up of 2 microservices which interact with wardrobe api.
+    -**Hats**
+    -**Shoes**
 
     Diagram:
     ![Img](https://i.imgur.com/vnC1q1l.png)
 
-## Shoes microservice
+## Shoes microservice/API
 
     Explain your models and integration with the wardrobe
     microservice, here.
-    Shoe model = manufacturer, model name, color, photo url and bin
-    poller= bin data for wardrobe
 
-## Hats microservice
+    Shoe model = Shoe (manufacturer, model name, color, photo url and bin) & BinVO(closet name, bin number and bin size)
+    Shoe model uses bin api to represent the bin.
+    poller= bin data for wardrobe
+    Shoe views used model encoders to show properties(GET,POST,DELETE)
+
+## Hats microservice/API
 
     Explain your models and integration with the wardrobe
     microservice, here.
