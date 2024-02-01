@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import api_shoes, api_shoe
+from .views import api_shoes
 
 urlpatterns = {
     path('shoes/', api_shoes, name="api_shoes"),
-    path("shoe/<int:pk>/", api_shoe, name="api_shoe"),
+    path('shoes/<int:shoe_id>/', api_shoes, name="api_shoes" )
 }

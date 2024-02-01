@@ -14,7 +14,8 @@ function App(props) {
           <Route path="/" element={<MainPage />} />
           <Route path="/hats" element={<HatList />} />
           <Route path="/shoes">
-            <Route index element={<ShoeList shoes={props.shoe} />} />
+            <Route index element={<ShoeList shoes={props.shoes} />} />
+            <Route path="new" element={<ShoeForm /> } />
           </Route>
         </Routes>
       </div>

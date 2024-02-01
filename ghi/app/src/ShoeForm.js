@@ -10,7 +10,7 @@ function ShoeForm(props) {
         bin: '',
     })
 
-    const getData = async () => {
+    const fetchData = async () => {
         const url = 'http://localhost:8100/api/bins';
         const response = await fetch(url);
 
@@ -20,7 +20,7 @@ function ShoeForm(props) {
         }
     }
     useEffect(() => {
-        getData();
+        fetchData();
     }, []);
 
     const handleSubmit = async (event) => {

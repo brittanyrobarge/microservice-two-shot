@@ -13,13 +13,11 @@ function ShoeList(props) {
     };
     const handleDelete = async (shoeToDelete) =>
     {
-        const response = await
-fetch('http://localhost:8080/api/shoes/${shoeToDelete.id}',{
+        await
+fetch(`http://localhost:8080/api/shoes/${shoeToDelete.id}`,{
         method: 'DELETE',
     });
-    if (response.ok) {
-        setShoes(prevShoes => prevShoes.filter(shoe => shoe.id !== shoeToDelete.id))
-    }
+    getData()
 };
     useEffect(()=>{
         getData()
@@ -34,18 +32,22 @@ fetch('http://localhost:8080/api/shoes/${shoeToDelete.id}',{
                     <th>Color</th>
                     <th>Photo Url</th>
                     <th>Bin</th>
+                    <th>Bin Number</th>
+                    <th>Bin Size</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                {shoes.map(shoe => {
+                {shoes.map((shoe) => {
                     return (
                         <tr key={shoe.id}>
                             <td>{shoe.manufacturer}</td>
                             <td>{shoe.model_name}</td>
                             <td>{shoe.color}</td>
                             <td><img src={shoe.picture_url} width={50} /></td>
-                            <td>{shoe.bin}</td>
+                            <td>{shoe.bin.closet_name}</td>
+                            <td>{shoe.bin.bin_number}</td>
+                            <td>{shoe.bin.bin_size}</td>
                             <td>
                                 <button onClick={() => handleDelete(shoe)}>Delete</button>
                             </td>

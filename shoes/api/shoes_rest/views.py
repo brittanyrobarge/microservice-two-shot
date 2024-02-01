@@ -8,7 +8,7 @@ from .models import Shoe, BinVO
 
 class BinVOEncoder(ModelEncoder):
     model = BinVO
-    properties = ["closet_name", "import_href", "id"]
+    properties = ["closet_name", "bin_number", "bin_size","reference_href", "id"]
 
 class ShoeListEncoder(ModelEncoder):
     model = Shoe
@@ -17,100 +17,52 @@ class ShoeListEncoder(ModelEncoder):
         "model_name",
         "color",
         "picture_url",
+        "bin",
         "id"
         ]
 
-    # def get_extra_data(self, o):
-    #     return {"bin": o.bin.closet_name}
+    encoders = {
+        "bin":BinVOEncoder()
+    }
 
-class ShoeDetailEncoder(ModelEncoder):
-     model = Shoe
-     properties = [
-        "manufacturer",
-        "model_name",
-        "color",
-        "picture_url",
-        "id"
-        # "bin"
-    ]
-# encoders = {
-#         "shoes":BinVOEncoder(),
-#     }
-
-# # Create your views here.
-@require_http_methods(["GET", "POST"])
-def api_shoes(request, bin_vo_id=None):  
+@require_http_methods(["GET", "POST", "DELETE"])
+def api_shoes(request, shoe_id=None):  
     if request.method == "GET":
-            if bin_vo_id is not None:
-                shoes = shoe.objects.filter(bin_vo_id=bin_vo_id)
-            else:
-                shoes = Shoe.objects.all()
-            return JsonResponse(
-                {"shoes": shoes},
-                encoder=ShoeListEncoder,
-            )
-    else:
+        shoes = Shoe.objects.all()
+    elif request.method == "POST":
         content = json.loads(request.body)
-
-        # try:
-        #     bin_id = content["bin"]
-        #     bin = BinVO.objects.get(id=bin_id)
-        #     content["bin"] = bin
-        # except BinVO.DoesNotExist:
-        #     return JsonResponse(
-        #         {"message": "Invalid bin id"},
-        #         status= 400,
-        #     )
+        print(content)
+        try:
+            href = content["bin"]
+            bin = BinVO.objects.get(reference_href=href)
+            print("what is in bin")
+            print(bin)
+            content["bin"] = bin
+        except BinVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid bin id"},
+                status= 400,
+            )
         shoe = Shoe.objects.create(**content)
         return JsonResponse(
-              {"shoe":shoe},
-              encoder=ShoeDetailEncoder,
+              shoe,
+              encoder=ShoeListEncoder,
               safe=False,
         )
-    
-    
-@require_http_methods(["DELETE", "GET"])
-def api_shoe(request, pk):
-    if request.method == "GET":
-        try:
-            shoe = Shoe.objects.get(id=pk)
-            return JsonResponse(
-                shoe,
-                encoder=ShoeDetailEncoder,
-                safe=False
-            )
-        except Shoe.DoesNotExist:
-            response = JsonResponse({"message": "Does not exist"})
-            response.status_code = 404
-            return response
-    elif request.method == "DELETE":
-        try:
-            shoe = Shoe.objects.get(id=pk)
-            shoe.delete()
-            return JsonResponse(
-                shoe,
-                encoder=ShoeDetailEncoder,
-                safe=False,
-            )
-        except Shoe.DoesNotExist:
-            return JsonResponse({"message": "Does not exist"})
     else:
         try:
-            content=json.loads(request.body)
-            shoe =Shoe.object.get(id=pk)
-            props = ["manufacturer","model_name","color","picture_url","bin"]
-            for prop in props:
-                if prop in content:
-                    setattr(shoe, prop, content[prop])
-            shoe.save()
-            return JsonResponse(
-                shoe,
-                encoder=ShoeDetailEncoder,
-                safe=False,
-            )
+            if shoe_id is not None:
+                shoe = Shoe.objects.get(id=shoe_id)
+                shoe.delete()
+                
         except Shoe.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
             response.status_code = 404
             return response
-
+        
+    return JsonResponse(
+        {"shoes": shoes},
+        encoder=ShoeListEncoder,
+        safe=False,
+    )
     

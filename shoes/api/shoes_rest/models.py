@@ -1,9 +1,11 @@
 from django.db import models
-from django.urls import reverse
-# Create your models here.
+
+
 class BinVO(models.Model):
-    import_href = models.CharField(max_length=200, unique=True)
+    reference_href = models.URLField()
     closet_name = models.CharField(max_length=200)
+    bin_number = models.PositiveSmallIntegerField()
+    bin_size = models.PositiveSmallIntegerField()
 
 
 class Shoe(models.Model):
@@ -11,16 +13,8 @@ class Shoe(models.Model):
     model_name = models.CharField(max_length=100)
     color = models.CharField(max_length=100)
     picture_url = models.URLField()
-
-    # bin = models.ForeignKey(
-    #     BinVO,
-    #     related_name="shoes",
-    #     on_delete= models.CASCADE
-    # )
-
-    # def __str__(self):
-    #     return f"{self.manufacturer}"
-    # def get_api_url(self):
-    #     return reverse("api_shoe",kwargs={"pk":self.pk})
-    # class Meta:
-    #     ordering =("manufacturer", "model_name", "color", "picture_url")
+    bin = models.ForeignKey(
+        BinVO,
+        related_name="shoes",
+        on_delete= models.CASCADE
+    )
