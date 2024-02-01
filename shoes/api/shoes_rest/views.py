@@ -31,17 +31,20 @@ def api_shoes(request, shoe_id=None):
         shoes = Shoe.objects.all()
     elif request.method == "POST":
         content = json.loads(request.body)
-        print(content)
+        required_fields = ["manufacturer", "model_name", "color", "picture_url","bin" ]
+        if not all(field in content for field in required_fields):
+            return JsonResponse(
+                {"message":"Missing required fields in JSON payload"},
+                status=400,
+            )
         try:
             href = content["bin"]
             bin = BinVO.objects.get(reference_href=href)
-            print("what is in bin")
-            print(bin)
             content["bin"] = bin
         except BinVO.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid bin id"},
-                status= 400,
+                status= 404,
             )
         shoe = Shoe.objects.create(**content)
         return JsonResponse(
@@ -54,6 +57,8 @@ def api_shoes(request, shoe_id=None):
             if shoe_id is not None:
                 shoe = Shoe.objects.get(id=shoe_id)
                 shoe.delete()
+            else:
+                return JsonResponse({"message": "shoe_id is required for DELETE method"}, status=400)
         except Shoe.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
             response.status_code = 404

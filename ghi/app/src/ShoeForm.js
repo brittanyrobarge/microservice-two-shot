@@ -35,9 +35,8 @@ function ShoeForm(props) {
                 'Content-Type': 'application/json',
             },
         };
-
         const response = await fetch(shoeUrl, fetchConfig);
-
+        console.log(response)
         if (response.ok) {
             setFormData({
                 manufacturer:'',
@@ -65,15 +64,15 @@ function ShoeForm(props) {
                     <form onSubmit={handleSubmit} id="create-shoe-form">
                         <div className="form-floating mb-3">
                             <input onChange={handleFormChange} value= {formData.manufacturer} placeholder="Manufacturer" required type="text" name="manufacturer" id="manufacturer" className="form-control" />
-                            <label htmlFor="name">Manufacturer</label>
+                            <label htmlFor="manufacturer">Manufacturer</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={handleFormChange} value= {formData.model_name} placeholder="Model" required type="text" name="model_name" id="model_name" className="form-control" />
-                            <label htmlFor="starts">Model</label>
+                            <label htmlFor="model_name">Model</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={handleFormChange} value= {formData.color} placeholder="Color" required type="text" name="color" id="color" className="form-control" />
-                            <label htmlFor="ends">Color</label>
+                            <label htmlFor="color">Color</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={handleFormChange} value= {formData.picture_url} placeholder="Photo Url" required type="url" name="picture_url" id="photo_url" className="form-control" />
