@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+
+
 
 function CreateHatForm() {
     const [locations, setLocations] = useState([]);
@@ -7,6 +10,7 @@ function CreateHatForm() {
     const [color, setColor] = useState('');
     const [picture, setPicture] = useState('');
     const [location, setLocation] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
 
 
@@ -43,13 +47,13 @@ function CreateHatForm() {
             },
         };
         const hatResponse = await fetch(hatUrl, fetchOptions);
-        console.log(hatResponse)
         if (hatResponse.ok) {
             setFabric('');
             setStyleName('');
             setColor('');
             setPicture('');
             setLocation('');
+            setIsSubmitted(true);
         }
     }
 
@@ -76,7 +80,11 @@ function CreateHatForm() {
         const value = event.target.value;
         setLocation(value);
     }
-    console.log(location)
+
+    if (isSubmitted) {
+        return <Navigate to="/hats" />;
+    }
+
     return (
         <form onSubmit={handleSubmit} className="text-center">
             <div className="form-group">
@@ -100,13 +108,13 @@ function CreateHatForm() {
             <div className="form-group">
                 <label>
                     Picture URL:
-                    <inputgit pull type="text" name="picture" value={picture} onChange={handleChangePicture} className="form-control" />
+                    <input type="text" name="picture" value={picture} onChange={handleChangePicture} className="form-control" />
                 </label>
             </div>
             {picture && (
                 <div className="form-group">
                     <label>Preview:</label>
-                    <img src={picture} alt="Preview" className="preview-image" />
+                    <img src={picture} alt="Preview" className="preview-image" width={200} />
                 </div>
             )}
             <div className="form-group">
@@ -117,7 +125,7 @@ function CreateHatForm() {
                     <select name="location" onChange={handleChangeLocation} className="form-control select-arrow">
                         <option value={location}>Select a location</option>
                         {locations.map(location => (
-                            <option key={location.reference_href} value={location.href}>
+                            <option key={location.id} value={location.href}>
                                 {`${location.closet_name} - Section ${location.section_number} - Shelf ${location.shelf_number}`}
                             </option>
                         ))}

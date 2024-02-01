@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 const HatList = () => {
     const [hatList, setHatList] = useState([])
@@ -13,7 +12,6 @@ const HatList = () => {
             const response = await fetch('http://localhost:8090/hats');
             const data = await response.json();
             setHatList(data.hats);
-            console.log(data)
         } catch (error) {
             console.error("Hats aren't populating! Here's what I got:", error);
         }
@@ -25,10 +23,10 @@ const HatList = () => {
         });
         fetchHatList();
     }
-
+    console.log(hatList)
     return (
         <div className="container">
-            <h1>Hat List</h1>
+            <h1 className="text-center">Hat List</h1>
             {hatList.length > 0 ? (
                 <table className="table table-dark table-striped table-hover table-bordered">
                     <thead className="table-light">
@@ -37,6 +35,9 @@ const HatList = () => {
                             <th>Color</th>
                             <th>Fabric</th>
                             <th>Style Name</th>
+                            <th>Closet Name</th>
+                            <th>Section Number</th>
+                            <th>Shelf Number</th>
                             <th>Delete?</th>
                         </tr>
                     </thead>
@@ -49,6 +50,9 @@ const HatList = () => {
                                 <td>{hat.color}</td>
                                 <td>{hat.fabric}</td>
                                 <td>{hat.style_name}</td>
+                                <td>{hat.location.closet_name}</td>
+                                <td>{hat.location.section_number}</td>
+                                <td>{hat.location.shelf_number}</td>
                                 <td>
                                     <button className="btn btn-danger" onClick={() => deleteHat(hat.id)}>
                                         Delete
